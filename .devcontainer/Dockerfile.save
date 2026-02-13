@@ -1,0 +1,76 @@
+# Debian base
+FROM debian:trixie
+
+# Set non-interactive frontend for apt
+ENV DEBIAN_FRONTEND=noninteractive
+#ENV DEVKITPRO=/opt/devkitpro
+#ENV DEVKITPPC=$DEVKITPRO/devkitPPC
+#ENV DEVKITARM=$DEVKITPRO/devkitARM
+#ENV PATH=$DEVKITPPC/bin:$DEVKITARM/bin:$PATH
+#ENV BUILD_DKPRO_INSTALLDIR=$DEVKITPRO
+
+# Basic build deps
+RUN apt-get update
+RUN apt-get install -y \
+    build-essential \
+    git \
+    wget \
+    unzip \
+    cmake \
+    pkg-config \
+    autoconf \
+    automake \
+    libtool \
+    texinfo \
+    patch \
+    libgmp-dev \
+    libmpfr-dev \
+    libmpc-dev \
+    libfreeimage-dev \
+    zlib1g-dev \
+    libusb-dev \
+    libudev-dev \
+    libexpat1-dev \
+    mesa-common-dev
+#    libx11-dev \
+#    libasound2-dev \
+#    libgl1-mesa-dev \
+#    libxi-dev \
+#    vulkan-tools \
+#    libvulkan-dev \
+#    vulkan-validationlayers-dev
+
+#Clean up apt cache
+RUN apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
+
+#download pacman
+
+
+#Install devKitPro
+# Create devkitPro install directory
+#RUN mkdir -p $DEVKITPRO
+
+# Clone build scripts
+#RUN git clone -b devkitPPC_r48 https://github.com/devkitPro/buildscripts.git /tmp/buildscripts
+
+# Setup DevKitPro
+#ENV BUILD_DKPRO_AUTOMATED=1
+#BUILD_DKPRO_PACKAGE=
+#1: devkitARM (gba gp32 ds 3ds)
+#2: devkitPPC (gamecube wii wii-u)
+#3: devkitA64 (switch)
+
+# gba + gp32 + ds + 3ds
+#ENV BUILD_DKPRO_PACKAGE=1
+#RUN cd /tmp/buildscripts && ./build-devkit.sh
+# GameCube + Wii # Wii U
+#ENV BUILD_DKPRO_PACKAGE=2
+#RUN cd /tmp/buildscripts && ./build-devkit.sh
+# Switch
+#ENV BUILD_DKPRO_PACKAGE=3
+#RUN cd /tmp/buildscripts && ./build-devkit.sh
+#CleanUp devkit setup files
+#RUN rm -rf /tmp/buildscripts
+
+WORKDIR /workspace
